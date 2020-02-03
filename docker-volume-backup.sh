@@ -10,7 +10,7 @@ fi
 VOLUME=$1
 FILENAME=$2
 
-docker volume inspect $VOLUME >/dev/null 2>&1
+docker volume inspect "$VOLUME" >/dev/null 2>&1
 if [ $? -ne 0 ]; then
   echo "Volume $VOLUME was not found"
   exit 2
@@ -22,4 +22,4 @@ if [[ -e $FILENAME ]]; then
   exit 3
 fi
 
-docker run --rm --workdir /volume --volume $VOLUME:/volume:ro alpine tar czf - . > $FILENAME
+docker run --rm --workdir /volume --volume "$VOLUME:/volume:ro" alpine tar czf - . > "$FILENAME"
