@@ -20,23 +20,23 @@ if [[ $# -ne 1 ]]; then
 fi
 
 if [[ ! -d $STACK_PATH ]]; then
-  echo Stack $STACK_NAME not found
+  echo "Stack $STACK_NAME not found"
   exit 2
 fi
 
 if [[ ! -f $STACK_COMPOSE ]]; then
-  echo $STACK_COMPOSE file not found
+  echo "$STACK_COMPOSE file not found"
   exit 3
 fi
 
-if [[ ! -z $GITHUB_TOKEN ] && [ ! -z $GITHUB_USERNAME ]]; then
-    docker login docker.pkg.github.com --username $GITHUB_USERNAME --password $GITHUB_TOKEN
+if [[ ! -z "$GITHUB_TOKEN" ] && [ ! -z "$GITHUB_USERNAME" ]]; then
+    docker login docker.pkg.github.com --username "$GITHUB_USERNAME" --password "$GITHUB_TOKEN"
 fi
 
-docker-compose --file $STACK_COMPOSE pull
+docker-compose --file "$STACK_COMPOSE" pull
 
-if [[ `docker stack ls | grep --count ^$STACK_NAME[[:space:]]` -eq 1 ]]; then
-    docker stack rm $STACK_NAME
+if [[ $(docker stack ls | grep --count "^$STACK_NAME[[:space:]]") -eq 1 ]]; then
+    docker stack rm "$STACK_NAME"
 fi
 
-docker stack deploy --compose-file $STACK_COMPOSE $STACK_NAME
+docker stack deploy --compose-file "$STACK_COMPOSE" "$STACK_NAME"
