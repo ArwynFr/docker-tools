@@ -16,10 +16,10 @@ if [[ ! -f $FILENAME ]]; then
   exit 2
 fi
 
-docker volume inspect $VOLUME >/dev/null 2>&1
+docker volume inspect "$VOLUME" >/dev/null 2>&1
 if [ $? -eq 0 ]; then
-  docker volume rm $VOLUME
+  docker volume rm "$VOLUME" >/dev/null
 fi
 
-docker volume create $VOLUME
-cat $FILENAME | docker run --rm --interactive --workdir /volume --volume $VOLUME:/volume alpine tar xzf -
+docker volume create "$VOLUME" >/dev/null
+(docker run --rm --interactive --workdir /volume --volume "$VOLUME:/volume" alpine tar xzf -) < "$FILENAME"
