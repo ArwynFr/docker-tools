@@ -20,7 +20,7 @@ if [[ $# -ne 1 ]]; then
 fi
 
 if [[ ! -d $STACK_PATH ]]; then
-  echo "Stack $STACK_NAME not found"
+  echo "Stack $STACK_PATH not found"
   exit 2
 fi
 
@@ -29,7 +29,7 @@ if [[ ! -f $STACK_COMPOSE ]]; then
   exit 3
 fi
 
-if [[ ! -z "$GITHUB_TOKEN" ] && [ ! -z "$GITHUB_USERNAME" ]]; then
+if [[ (! -z "$GITHUB_TOKEN") && (! -z "$GITHUB_USERNAME") ]]; then
     docker login docker.pkg.github.com --username "$GITHUB_USERNAME" --password "$GITHUB_TOKEN"
 fi
 
